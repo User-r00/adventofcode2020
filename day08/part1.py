@@ -19,7 +19,7 @@ def read_input(file):
 def convert_instruction_to_class(line):
     instruction = re.findall('[a-z]+', line)[0]
     operator = re.findall('[+-]', line)[0]
-    offset = int(re.findall('\d', line)[0])
+    offset = int(re.findall('\d+', line)[0])
 
     return Instruction(instruction, operator, offset)
 
@@ -32,34 +32,30 @@ if __name__ == '__main__':
 
     accumulator = 0
 
-    for i in range(len(instructions)):
+    i = 0
+
+    while i < len(instructions):
         ins = instructions[i]
-        # print(f'ins: {ins}')
 
         if ins.run == True:
-            print(f'Instruction already run.')
             break
-
-        print(f'{ins.instruction} {ins.operator} {ins.offset} {ins.run}')
 
         ins.run = True
 
         if ins.instruction == 'acc':
             if ins.operator == '+':
-                print(f'ADDING {ins.offset} TO ACCUMULATOR')
                 accumulator += ins.offset
+                i += 1
             else:
-                print(f'SUBTRACTING {ins.offset} FROM ACCUMULATOR')
-                accumulator -+ ins.offset
+                accumulator -= ins.offset
+                i += 1
         elif ins.instruction == 'jmp':
             if ins.operator == '+':
-                print(f'MOVING INDEX FORWARD {ins.offset} INSTRUCTIONS')
                 i += ins.offset
             else:
-                print(f'MOVING INDEX backward {ins.offset} INSTRUCTIONS')
                 i -= ins.offset
         else:
-            print(f'NOOP')
+            i += 1
             continue
 
     print(f'Accumulator: {accumulator}')
