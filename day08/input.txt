@@ -1,0 +1,10 @@
+acc +45
+nop +631
+acc +12
+acc -10
+jmp +127
+acc +28
+jmp +460
+jmp +619
+acc +15
+jmp +277
